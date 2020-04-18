@@ -2,24 +2,28 @@ version: "3"
 
 services:
   app:
-    container_name: express-mongo
+    container_name: express
     restart: always
     build: ./server
     ports:
       - "8080:8080"
     links:
-      - mongo
+      - postgres
     depends_on:
-      - mongo
+      - postgres
     environment:
       - API_ENDPOINT=http://localhost:8080 # This MUST be included as a valid URL in the spotify dashboard
       - CLIENT_ENDPOINT=http://localhost:3000
       - SPOTIFY_PUBLIC=__your_spotify_client_id__
       - SPOTIFY_SECRET=__your_spotify_secret__
       - CORS=http://localhost:3000,http://localhost:3001
-  mongo:
-    container_name: mongo
-    image: mongo
+  postgres:
+    container_name: postgres
+    image: postgres
+    environment:
+      - POSTGRES_USER=your_spotify
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=your_spotify
 
   web:
     container_name: web

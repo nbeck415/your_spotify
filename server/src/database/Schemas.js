@@ -46,7 +46,7 @@ const Artist = mongoose.model('Artist', {
   "uri": String,
 });
 
-const Album = mongoose.model('Album', {
+const Album = mongoose.model('Album', new mongoose.Schema({
   "album_type": String,
   "artists": [String],
   "available_markets": [String],
@@ -64,7 +64,7 @@ const Album = mongoose.model('Album', {
   //  "tracks": ,
   "type": String,
   "uri": String,
-});
+}, { toJSON: { virtuals: true }, toObject: { virtuals: true } }));
 
 Album.schema.virtual('artist', {
   ref: 'Artist',

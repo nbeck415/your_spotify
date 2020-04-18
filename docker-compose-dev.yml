@@ -11,18 +11,20 @@ services:
     volumes:
       - ./server/src/:/app/src/
     links:
-      - mongo
+      - postgres
     depends_on:
-      - mongo
+      - postgres
     environment:
       - API_ENDPOINT=http://localhost:8080 # This MUST be included as a valid URL in the spotify dashboard
       - CLIENT_ENDPOINT=http://localhost:3000
       - SPOTIFY_PUBLIC=__your_spotify_client_id__
       - SPOTIFY_SECRET=__your_spotify_secret__
       - CORS=all
-  mongo:
-    container_name: mongo
-    image: mongo
+  postgres:
+    container_name: postgres
+    image: postgres
+    ports:
+      - 5432:5432
 
   web:
     container_name: web

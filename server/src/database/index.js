@@ -11,7 +11,7 @@ const connect = async () => {
   while (1) {
     try {
       logger.debug('Trying to connect to database');
-      await mongoose.connect('mongodb://mongo:27017/your_spotify', { useNewUrlParser: true });
+      await mongoose.connect('mongodb://192.168.1.6:27017/your_spotify', { useNewUrlParser: true });
       logger.debug('Connected to database !');
       return;
     } catch (e) {
