@@ -53,9 +53,10 @@ async function addTracks() {
 }
 
 async function addUsers() {
-  const users = await User.find().populate('tracks');
+  const users = await User.find().populate();
   return Promise.all(users.map(async user => {
     user = user.toJSON();
+    const history = await Infos.find({ owner: user._id });
     delete user._id;
     delete user.__v;
     user.expires_at = new Date(user.expiresIn);
@@ -71,7 +72,6 @@ async function addUsers() {
     user.history_line = user.settings.historyLine;
     user.preferred_stats_period = user.settings.preferredStatsPeriod;
     delete user.settings;
-    const history = user.tracks;
     delete user.tracks;
     delete user.id;
     let newUser;
@@ -81,13 +81,14 @@ async function addUsers() {
       console.log(e, user);
     }
     await Promise.all(history.map(async hist => {
+      hist = hist.toJSON();
       const newHist = {
         listened_at: hist.played_at,
         user_id: newUser.id,
         track_id: hist.id,
       };
       try {
-        await pg.addHistory(newHist.user_id, newHist.track, newHist.listened_at);
+        await pg.addHistory(newHist.user_id, newHist.track_id, newHist.listened_at);
       } catch (e) {
         console.log(hist, e);
       }
