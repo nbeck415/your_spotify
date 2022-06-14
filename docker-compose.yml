@@ -16,7 +16,7 @@ services:
     depends_on:
       - mongo
     environment:
-      - API_ENDPOINT=http://localhost:8080 # This MUST be included as a valid URL in the spotify dashboard
+      - API_ENDPOINT=https://nbeck415-your-spotify.dev.shipyard.host # This MUST be included as a valid URL in the spotify dashboard
       - CLIENT_ENDPOINT=http://localhost:3000
       - SPOTIFY_PUBLIC=05fc6fe23e7e4e28a76836a34be932f7
       - SPOTIFY_SECRET=dc5a6edf659b4ce2b3de273a476a5280
